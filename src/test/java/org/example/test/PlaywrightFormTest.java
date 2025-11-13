@@ -3,6 +3,7 @@ package org.example.test;
 import com.microsoft.playwright.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import java.nio.file.Paths;
 
 public class PlaywrightFormTest {
 
@@ -17,7 +18,7 @@ public class PlaywrightFormTest {
 
             BrowserContext context = browser.newContext(
                     new Browser.NewContextOptions()
-                            .setRecordVideoDir("videos/")
+                            .setRecordVideoDir(Paths.get("videos/"))
                             .setRecordVideoSize(1280, 720)
             );
 
@@ -25,7 +26,6 @@ public class PlaywrightFormTest {
 
             page.navigate("https://demoqa.com/automation-practice-form");
 
-            // =============== FORM DATA ===============
             String FIRST_NAME = "Marius";
             String LAST_NAME = "Cociug";
             String EMAIL = "mariuscociug096@gmail.com";
@@ -37,13 +37,11 @@ public class PlaywrightFormTest {
             String CITY = "Jaipur";
             String DATE_OF_BIRTH = "22 May,2006";
 
-            // =============== FORM FILL ===============
             page.fill("#firstName", FIRST_NAME);
             page.fill("#lastName", LAST_NAME);
             page.fill("#userEmail", EMAIL);
 
             page.click("label[for='gender-radio-1']");
-
             page.fill("#userNumber", USER_NUMBER);
 
             page.click("#dateOfBirthInput");
@@ -62,8 +60,6 @@ public class PlaywrightFormTest {
             page.click("text=" + CITY);
 
             page.click("#submit");
-
-            // =============== ASSERTIONS ===============
 
             Assert.assertEquals(page.textContent("//td[text()='Student Name']/following-sibling::td"),
                     FIRST_NAME + " " + LAST_NAME);
@@ -89,7 +85,7 @@ public class PlaywrightFormTest {
             Assert.assertEquals(page.textContent("//td[text()='State and City']/following-sibling::td"),
                     STATE + " " + CITY);
 
-            context.close(); // salvează video
+            context.close();
         }
     }
 }
