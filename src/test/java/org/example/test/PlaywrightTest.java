@@ -3,18 +3,23 @@ package org.example.test;
 import com.microsoft.playwright.*;
 import org.testng.annotations.Test;
 
+import java.nio.file.Paths;
+
 public class PlaywrightTest {
 
     @Test
     public void runPlaywright() {
         try (Playwright playwright = Playwright.create()) {
 
-            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
-                    .setHeadless(true)); // pe GitHub trebuie true
+            Browser browser = playwright.chromium().launch(
+                    new BrowserType.LaunchOptions()
+                            .setHeadless(true) // GitHub Actions = true
+            );
 
-            BrowserContext context = browser.newContext(new Browser.NewContextOptions()
-                    .setRecordVideoDir("videos/")   // folder local pentru video
-                    .setRecordVideoSize(1280, 720)  // rezoluție video
+            BrowserContext context = browser.newContext(
+                    new Browser.NewContextOptions()
+                            .setRecordVideoDir(Paths.get("videos"))     // ✔ corect
+                            .setRecordVideoSize(1280, 720)              // rezoluție video
             );
 
             Page page = context.newPage();
@@ -22,7 +27,8 @@ public class PlaywrightTest {
 
             System.out.println("Playwright merge!");
 
-            context.close(); // salvează video la închidere
+            // Închidem contextul pentru a salva video-ul
+            context.close();
         }
     }
 }
