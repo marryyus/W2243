@@ -24,11 +24,16 @@ public class FormTest {
     public static String CITY = "Jaipur";
     public static String DATE_OF_BIRTH = "22 May,2006";
 
-    @BeforeClass
-    public void beferoTest() {
-        driver = Driver.getAutoLocalDriver();
-        driver.manage().window().maximize();
-    }
+//    @BeforeClass
+//    public void beferoTest() {
+//        driver = Driver.getAutoLocalDriver();
+//        driver.manage().window().maximize();
+//    }
+@BeforeClass
+public void beferoTest() {
+    driver = Driver.getSelenoidDriver();
+}
+
 
     @Test
     public void formTest() throws InterruptedException {

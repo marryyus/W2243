@@ -83,4 +83,27 @@ static public WebDriver getAutoLocalDriver() {
 
         return remoteDriver;
     }
+    public static WebDriver getSelenoidDriver() {
+        ChromeOptions options = new ChromeOptions();
+        options.setCapability("browserName", "chrome");
+        options.setCapability("browserVersion", "latest");
+
+        Map<String, Object> selenoidOptions = new HashMap<>();
+        selenoidOptions.put("enableVNC", true);
+        selenoidOptions.put("enableVideo", true);
+        selenoidOptions.put("videoScreenSize", "1920x1080");
+        selenoidOptions.put("enableLog", true);
+
+        options.setCapability("selenoid:options", selenoidOptions);
+
+        try {
+            return new RemoteWebDriver(
+                    new URL("http://localhost:4444/wd/hub"),
+                    options
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

@@ -1,0 +1,11 @@
+{
+  "chrome": {
+    "default": "latest",
+    "versions": {
+      "latest": {
+        "image": "selenoid/vnc:chrome_latest",
+        "port": "4444"
+      }
+    }
+  }
+}
