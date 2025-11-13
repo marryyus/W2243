@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="W2243"
+           tests="1"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="16,309">
+    <properties></properties>
+
+
+
+            <testcase
+                name="runPlaywright"
+                time="16,309"
+                classname="org.example.test.PlaywrightTest">
+            </testcase>
+</testsuite>
