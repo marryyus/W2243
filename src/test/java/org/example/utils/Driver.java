@@ -13,9 +13,17 @@ import java.util.HashMap;
 
 public class Driver {
     static public WebDriver getAutoLocalDriver() {
-        WebDriverManager.chromedriver().setup(); // sets up ChromeDriver automatically
-        return new ChromeDriver();
+        WebDriverManager.chromedriver().setup();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");     // OBLIGATORIU pe GitHub Actions
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--window-size=1920,1080");
+
+        return new ChromeDriver(options);
     }
+
 
     static public WebDriver getLocalDriver() {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\User\\Desktop\\Colegiu\\TAV\\chromedriver-win64\\chromedriver.exe");
