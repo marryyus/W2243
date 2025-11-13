@@ -3,6 +3,10 @@ package org.example.pom;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class FormPom {
 
@@ -46,20 +50,37 @@ public class FormPom {
         submit.click();
     }
 
-    public void setcity(String cityParam) {
-        city.click();
-        WebElement cityEl = driver.findElement(By.xpath("//*[text()='"+ cityParam +"']"));
-        cityEl.click();
+    // ------------ FIX COMPLET PENTRU STATE (React Select) ------------
+    public void setstate(String stateParam) {
+        // Deschide dropdown-ul State
+        state.click();
+
+        // Accesează input-ul real al React-Select
+        WebElement input = driver.findElement(By.id("react-select-3-input"));
+
+        // Trimite textul statului
+        input.sendKeys(stateParam);
+
+        // Așteaptă opțiunea să apară și apasă ENTER
+        input.sendKeys(Keys.ENTER);
     }
 
-    public void setstate(String stateParam) {
-        state.click();
-        WebElement stateEl = driver.findElement(By.xpath("//*[text()='" + stateParam + "']"));
-        stateEl.click();
+
+    // ------------ FIX COMPLET PENTRU CITY (React Select) ------------
+    public void setcity(String cityParam) {
+        // Deschide dropdown-ul City
+        city.click();
+
+        // Input-ul din React-Select pentru orașe
+        WebElement inputCity = driver.findElement(By.id("react-select-4-input"));
+
+        inputCity.sendKeys(cityParam);
+        inputCity.sendKeys(Keys.ENTER);
     }
+
 
     public void setHobbies(String hobbyParam) {
-        WebElement el = driver.findElement(By.xpath("//*[@id='hobbiesWrapper']//label[text()='"+ hobbyParam + "']/../input"));
+        WebElement el = driver.findElement(By.xpath("//*[@id='hobbiesWrapper']//label[text()='" + hobbyParam + "']/../input"));
         el.sendKeys(" ");
     }
 
@@ -102,12 +123,11 @@ public class FormPom {
 
     public void closeAdvert() {
         try {
-            js.executeScript("var elem = document.evaluate(\"//*[@id='adplus-anchor']\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;" +
-                    "elem.parentNode.removeChild(elem);");
+            js.executeScript("var elem=document.getElementById('adplus-anchor'); if(elem) elem.remove();");
         } catch (Exception ignored) {}
+
         try {
-            js.executeScript("var elem = document.evaluate(\"//footer\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;" +
-                    "elem.parentNode.removeChild(elem);");
+            js.executeScript("var elem=document.getElementsByTagName('footer')[0]; if(elem) elem.remove();");
         } catch (Exception ignored) {}
     }
 
@@ -116,7 +136,6 @@ public class FormPom {
     }
 
     public void scrollToElement(WebElement element) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 }
