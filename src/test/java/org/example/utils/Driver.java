@@ -12,17 +12,36 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Driver {
-    static public WebDriver getAutoLocalDriver() {
-        WebDriverManager.chromedriver().setup();
+//    static public WebDriver getAutoLocalDriver() {
+//        WebDriverManager.chromedriver().setup();
+//
+//        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--headless=new");     // OBLIGATORIU pe GitHub Actions
+//        options.addArguments("--no-sandbox");
+//        options.addArguments("--disable-dev-shm-usage");
+//        options.addArguments("--window-size=1920,1080");
+//
+//        return new ChromeDriver(options);
+//    }
+static public WebDriver getAutoLocalDriver() {
+    WebDriverManager.chromedriver().setup();
 
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");     // OBLIGATORIU pe GitHub Actions
+    ChromeOptions options = new ChromeOptions();
+
+    // Dacă rulează în GitHub Actions → HEADLESS
+    if (System.getenv("GITHUB_ACTIONS") != null) {
+        options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
-
-        return new ChromeDriver(options);
+    } else {
+        // LOCAL – Chrome vizibil
+        options.addArguments("--start-maximized");
     }
+
+    return new ChromeDriver(options);
+}
+
 
 
     static public WebDriver getLocalDriver() {
