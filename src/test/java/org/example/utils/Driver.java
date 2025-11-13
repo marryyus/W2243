@@ -35,7 +35,7 @@ static public WebDriver getAutoLocalDriver() {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
     } else {
-        // LOCAL – Chrome vizibil
+        // LOCAl
         options.addArguments("--start-maximized");
     }
 
