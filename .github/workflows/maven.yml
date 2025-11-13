@@ -1,4 +1,4 @@
-name: Run Selenium Tests
+name: Run Playwright Tests
 
 on:
   push:
@@ -16,11 +16,11 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Install Chrome
-        uses: browser-actions/setup-chrome@v1
+      - name: Install Playwright Dependencies
+        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install-deps"
 
-      - name: Run Maven tests
-        run: mvn clean test
+      - name: Run ONLY Playwright tests
+        run: mvn -Dtest=PlaywrightFormTest test
 
       - name: Upload Playwright Videos
         uses: actions/upload-artifact@v4
